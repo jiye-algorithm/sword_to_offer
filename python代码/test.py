@@ -1,0 +1,1 @@
+def fun(a, b):    a = 5    b = 10    return Falseif __name__ == '__main__':    a = 15    b = 12    fun(a, b)    print(a, b)

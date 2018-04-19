@@ -1,0 +1,1 @@
+'''求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。'''# -*- coding:utf-8 -*-class Solution:    '''    这是一道关于语言特性的非常棒的一道题目，站在编程语言的角度思考问题，    '''    def Sum_Solution(self, n):        fun = [self.return_fun, self.Sum_Solution]        return n + fun[n != 0](n - 1)        pass    def return_fun(self, n):        return 0    pass
