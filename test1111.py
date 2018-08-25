@@ -1,16 +1,25 @@
+
 line ={}
 chaxun_=[]
+k = 0
+dont_move_key = 0
+not_move =  0
+flag = False
 n,m = map(int,input().split(" "))
 for i in range(n):
     li = input().split(" ")
     line[li[0]] = [int(li[2]),-1,li[4]]
 for index in range(m):
     chaxun_.append(input().split(" "))
-
 for key in list(line.keys()):
+    k = key
     if line.get(line[key][-1],0) ==0:
         not_move = line[key][-1]
         dont_move_key = key
+        flag = True
+if not flag :
+    not_move = line[k][-1]
+    dont_move_key = k
 for i in range(len(line)):
     for key in line:
         if line[key][-1] == dont_move_key :
