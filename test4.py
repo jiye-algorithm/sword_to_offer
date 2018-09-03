@@ -1,41 +1,43 @@
-n, l = [int(a) for a in input().strip().split()]
-chars = [[] for _ in range(l)]
-words = []
-for _ in range(n):
-    tmp_word = input()
-    words.append(tmp_word)
-    for i, x in enumerate(chars):
-        x.append(tmp_word[i])
-words = list(set(words))
-words.sort()
-n = len(words)
-for i, _ in enumerate(chars):
-    chars[i] = list(set(chars[i]))
-    chars[i].sort()
-gen_words_index = [0 for i in range(l)]
+my_input = str(input().strip().split())
+my_input_len = len(input().strip().split())
 
-i = l - 1
-all_index = 0
-# print(words)
-# print(chars)
 
-while all_index < n:
-    curr_word = ''.join([chars[i][gen_words_index[i]] for i in range(l)])
-    ### print('curr', i, gen_words_index)
-    ### print(curr_word, words[all_index])
-    if curr_word != words[all_index]:
-        print(curr_word)
-        exit()
-    all_index += 1
-    while i >= 0 and gen_words_index[i] >= len(chars[i]) - 1:
-        i -= 1
-    if i < 0:
-        break
-    gen_words_index[i] += 1
-    i += 1
-    while i <= l - 1:
-        gen_words_index[i] = 0
-        i += 1
-    i = l - 1
+def yunsuan(a,b,c):
+    if c == "+":
+        return a+b
+    if c == "-":
+        return b-a
+    if c == "*":
+        return a*b
+    if c == "/":
+        return b/a
 
-print('-')
+def compare(operator_left, operator_right):
+    if operator_left in '+-' and operator_right in '*/':
+        return True
+    return False
+
+
+operator_stack = list()
+operand_stack = list()
+ans = 0
+for ind, num in enumerate(my_input):
+    if num == my_input[-1]:
+        ans = yunsuan(operand_stack[-1], int(num), operator_stack[-1])
+    else:
+        if num in '+-*/':
+            while len(operator_stack) != 0 and compare(operator_stack[-1], num):
+                temp = yunsuan(operand_stack[-2], operand_stack[-1], operator_stack[-1])
+                operand_stack = operand_stack[: -2]
+                operator_stack = operator_stack[: -1]
+                operand_stack.append(temp)
+        else:
+            operand_stack.append(int(num))
+
+print(ans)
+
+
+
+
+
+
