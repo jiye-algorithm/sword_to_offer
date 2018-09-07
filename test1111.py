@@ -1,30 +1,80 @@
-my_p = list(map(int, input().strip().split()))
-my_q = list(map(int, input().strip().split()))
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+class Graph {
+	private int V;
+	private int E;
+	private List<Integer>[] adj;
+	private int[][] a;
 
-from collections import Counter
-from math import log2
+	public Graph(int V) {
+		this.E = 0;
+		this.V = V;
+		adj = new ArrayList[V];
+		a = new int[V][V];
+		for (int i = 0; i < V; i++) {
+			adj[i] = new ArrayList<>();
+		}
+	}
 
-counter_p = Counter(my_p)
-counter_q = Counter(my_q)
+	public void addEdge(int v1, int v2) {
+		a[v1][v2] = 1;
+		a[v2][v1] = 1;
+		adj[v1].add(v2);
+		adj[v2].add(v1);
+		E++;
+	}
 
-count_p = 0
-count_q = 0
-for item in counter_p.items():
-    count_p += item[1]
-    count_q += counter_q.get(item[0])
+	public int V() {
+		return V;
+	}
 
-prob_p = {}
-prob_q = {}
-for item in counter_p.items():
-    prob_p[item[0]] = item[1] / count_p
-    prob_q[item[0]] = counter_q.get(item[0]) / count_q
+	public int E() {
+		return E;
+	}
 
-for item in counter_p.items():
-    prob_p[item[0]] = item[1] / float(count_p)
-    prob_q[item[0]] = counter_q.get(item[0]) / float(count_q)
 
-ans = 0
-for item in counter_p.items():
-    ans += prob_p[item[0]] * log2(prob_p[item[0]] / prob_q[item[0]])
+	public List<Integer> adj(int i) {
+		return adj[i];
+	}
 
-print("{:.2f}".format(ans))
+
+	public List<Integer> adj1(int i) {
+		List<Integer> list = new ArrayList<>();
+		int[] adg1 = new int[V];
+		adg1 = a[i];
+		for (int v : adg1)
+			if (v != 0)
+				list.add(v);
+		return list;
+	}
+}
+
+public class Main {
+	static boolean[] marked;
+	static int count;
+	static int[] edgeTo;
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = Integer.valueOf(sc.nextLine());
+		Graph g = new Graph(n);
+		for(int i=0;i<n-1;i++){
+			String str[] = sc.nextLine().split(" ");
+			g.addEdge(Integer.valueOf(str[0])-1, Integer.valueOf(str[1])-1);
+		}
+		marked = new boolean[g.V()];
+		edgeTo = new int[g.V()];
+		dfs(g,0);
+		System.out.println(count);
+	}
+	
+	public static void dfs(Graph G, int s) {
+		marked[s] = true;
+		count++;
+		for (int temp : G.adj(s))
+			if (!marked[temp]) {
+				edgeTo[temp] = s;
+				dfs(G, temp);
+			}
+	}
+}
