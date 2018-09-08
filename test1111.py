@@ -1,20 +1,21 @@
-my_input = list(input().strip("\n"))
-count = 1
-pre_num = 0
-for i in range(len(my_input) -1):
-    if my_input[i] == my_input[i+1]:
-        if (my_input[i] == my_input[0] and my_input[i+1] == my_input[-1]) or (my_input[0] == my_input[-1]):
-            if pre_num < count:
-                pre_num = count
-            count = 1
+line = list(input().strip("\n"))
+num= 1
+pre= 0
+for i in range(len(line) -1):
+    if line[i] == line[i+1]:
+        if (line[i] == line[0] and line[i+1] == line[-1]) or (line[0] == line[-1]):
+            if pre <num:
+                pre = num
+            num =1
+            continue
         else:
-            left = my_input[:i+1]
-            reversed(left)
-            right = my_input[i+1:]
-            reversed(right)
-            my_input = left + right
-            count += 1
-    else:
-        count +=1
+            part1 = list(reversed(line[:i+1]))
 
-print(count)
+            part2 = list(reversed(line[i+1:]))
+
+            line = part1 + part2
+            num += 1
+    else:
+        num +=1
+
+print(pre)
