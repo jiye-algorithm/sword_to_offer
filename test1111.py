@@ -1,32 +1,31 @@
-N = int(input().strip())
-M = int(input().strip())
+N, M = list(map(int, input().strip().split()))[0: 2]
 
-my_input = list(map(int, input().strip().split()))
+graph = [] * N
+color = [] * N
 
-my_map = {}
-for i in set(my_input):
-    my_map[i] = set()
-
-i = 0
-while i < len(my_input):
-    start, end = my_input[i : i + 2]
-    my_map[end].add(start)
-    for it in my_map[start]:
-        my_map[end].add(it)
-    i += 2
-    pass
-
-ans = 0
-for key, value in my_map.items():
-    count = 0
-    for key2, value2 in my_map.items():
-        if key == key2:
-            continue
-        if key in value2:
-            count += 1
-    if count == N - 1:
-        ans = key
-        break
+for i in range(M):
+    start, end = list(map(int, input().strip().split()))[0: 2]
+    graph[start].append(end)
 
 
-print(ans)
+def dfs(v, c):
+
+    color[v] = c
+
+    for i in range(len(graph[v])):
+        if(color[graph[v][i]] == c):
+            return False
+        if(color[graph[v][i]] == 0 and not dfs(graph[v][i], -c)) :
+            return False
+
+    return True
+
+def solve():
+    for i in range(N):
+        if(color[i] == 0):
+            if(not dfs(i, 1)):
+                print("No")
+                return
+
+
+solve()
