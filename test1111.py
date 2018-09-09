@@ -1,32 +1,32 @@
-N, M = list(map(int, input().strip().split()))[0: 2]
+def forward(s, t):
+    r = dict()
+    for _t_index, _t in enumerate(t):
+        has_r = r.get(_t, "0")
+        if has_r == "0":
+            r[_t] = s[_t_index]
+        else:
+            if has_r != s[_t_index]:
+                return 0
+        pass
 
-graph = [] * N
-color = [] * N
-
-for i in range(M):
-    start, end = list(map(int, input().strip().split()))[0: 2]
-    graph[start].append(end)
-
-
-def dfs(v, c):
-
-    color[v] = c
-
-    for i in range(len(graph[v])):
-        if(color[graph[v][i]] == c):
-            return False
-        if(color[graph[v][i]] == 0 and not dfs(graph[v][i], -c)) :
-            return False
-
-    return True
-
-def solve():
-    for i in range(N):
-        if(color[i] == 0):
-            if(not dfs(i, 1)):
-                print("No")
-                return
-    print("Yes")
+    r = dict()
+    for _s_index, _s in enumerate(s):
+        has_r = r.get(_s, "0")
+        if has_r == "0":
+            r[_s] = t[_s_index]
+        else:
+            if has_r != t[_s_index]:
+                return 0
+        pass
+    return 1
 
 
-solve()
+S = input().strip()
+T = input().strip()
+count = 0
+for i in range(len(S) - len(T) + 1):
+    S = S[i: i + len(T)]
+    count += forward(S, T)
+    pass
+
+print(count)
