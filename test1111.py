@@ -1,27 +1,35 @@
-def forward(follow, mid_var, ans, count, i, length):
-    if i ==length and count == 0:
-        ans.append(mid_var)
-        return ans
-    if (count== 0 and i < length) or (count > 0 and i == length):
-        return ans
-    flag = True
-    num = 0
-    while i < length and flag:
-        if num == 0 and follow[i] == "0":
-            flag = False
-        num = num * 10 + ord(follow[i]) - ord('0')
-        i += 1
-        if num < 256:
-            record = ""
-            if num == 1:
-                record = mid_var + str(num)
-            else:
-                record = mid_var + str(num) + "."
-                forward(follow, record, ans, count-1, i, length)
-    return ans
+N = int(input().strip())
+M = int(input().strip())
 
-my_input = input().strip()
-ans = []
-mid_var = ""
-ans = forward(my_input, mid_var, ans,4, 0,  len(my_input))
-print(len(ans))
+my_input = list(map(int, input().strip().split()))
+
+my_map = {}
+for i in set(my_input):
+    my_map[i] = set()
+
+i = 0
+while i < len(my_input):
+    start, end = my_input[i : i + 2]
+    my_map[end].add(start)
+    for it in my_map[start]:
+        my_map[end].add(it)
+    i += 2
+    pass
+
+ans = 0
+for key, value in my_map.items():
+    count = 0
+    for key2, value2 in my_map.items():
+        if key == key2:
+            continue
+        if key in value2:
+            count += 1
+    if count == N - 1:
+        ans = key
+        break
+
+
+print(ans)
+
+
+
