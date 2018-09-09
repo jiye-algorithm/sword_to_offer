@@ -20,13 +20,12 @@ def forward(s, t):
         pass
     return 1
 
-
-S = input().strip()
-T = input().strip()
-count = 0
+S = input()
+T = input()
+result_count = 0
 for i in range(len(S) - len(T) + 1):
     S = S[i: i + len(T)]
-    count += forward(S, T)
+    result_count += forward(S, T)
     pass
 
-print(count)
+print(str(result_count) + "\n")
