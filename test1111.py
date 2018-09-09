@@ -30,6 +30,3 @@ for key, value in my_map.items():
 
 
 print(ans)
-
-
-
