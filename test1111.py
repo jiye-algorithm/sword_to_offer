@@ -8,13 +8,13 @@ for i in set(my_input):
     my_map[i] = set()
 
 i = 0
-while i < len(my_input):
+while i < N:
     start, end = my_input[i : i + 2]
     my_map[end].add(start)
     for it in my_map[start]:
         my_map[end].add(it)
-    my_map[end] = set(my_map[end])
     i += 2
+    pass
 
 ans = 0
 for key, value in my_map.items():
