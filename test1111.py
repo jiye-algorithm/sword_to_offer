@@ -1,35 +1,21 @@
-N = int(input().strip())
-M = int(input().strip())
+line = input().strip()
 
-my_input = list(map(int, input().strip().split()))
-
-my_map = {}
-for i in set(my_input):
-    my_map[i] = set()
-
-i = 0
-while i < N:
-    start, end = my_input[i : i + 2]
-    my_map[end].add(start)
-    for it in my_map[start]:
-        my_map[end].add(it)
-    i += 2
-    pass
-
+left = 0
+right = 0
 ans = 0
-for key, value in my_map.items():
-    count = 0
-    for key2, value2 in my_map.items():
-        if key == key2:
-            continue
-        if key in value2:
-            count += 1
-    if count == N - 1:
-        ans = key
-        break
+visited = [0] * 256 
+while left < len(line):
+    if right < len(line) and visited[ord(line[right])] == 0:
+        visited[ord(line[right])] += 1
+        right += 1
+    else:
+        visited[ord(line[left])] -= 1
+        left += 1
 
+    asn = max(ans, right - left)
 
 print(ans)
 
 
-
+    
+    
