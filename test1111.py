@@ -26,6 +26,7 @@ def solve():
             if(not dfs(i, 1)):
                 print("No")
                 return
+    print("Yes")
 
 
 solve()
