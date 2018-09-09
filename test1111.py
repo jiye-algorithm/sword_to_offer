@@ -1,16 +1,23 @@
-my_input = list(input().strip("\n"))
-count= 1
-pre_num= 0
-for i in range(len(my_input) -1):
-    if my_input[i] == my_input[i+1]:
-        if (my_input[i] == my_input[0] and my_input[i+1] == my_input[-1]) or (my_input[0] == my_input[-1]):
-            if pre_num <count:
-                pre_num = count
-            count =1
-        else:
-            my_input = list(reversed(my_input[:i+1])) + list(reversed(my_input[i+1:]))
-            count += 1
-    else:
-        count +=1
+N = int(input().strip())
+M = int(input().strip())
 
-print(pre_num)
+my_input = list(map(int, input().strip().split()))
+
+i = 0
+my_map = {}
+for i in set(my_input):
+    my_map[i] = []
+
+while i < len(my_input):
+    start, end = my_input[i : i + 2]
+    my_map[end].append(start)
+    for it in my_map[start]:
+        my_map[end].append(it)
+    my_map[end] = set(my_map[end])
+    
+for key, value in my_map.items():
+    if len(my_map[key]) == len(my_map):
+        print(key)
+        break
+    
+
