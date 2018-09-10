@@ -1,80 +1,65 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-class Graph {
-	private int V;
-	private int E;
-	private List<Integer>[] adj;
-	private int[][] a;
-
-	public Graph(int V) {
-		this.E = 0;
-		this.V = V;
-		adj = new ArrayList[V];
-		a = new int[V][V];
-		for (int i = 0; i < V; i++) {
-			adj[i] = new ArrayList<>();
-		}
-	}
-
-	public void addEdge(int v1, int v2) {
-		a[v1][v2] = 1;
-		a[v2][v1] = 1;
-		adj[v1].add(v2);
-		adj[v2].add(v1);
-		E++;
-	}
-
-	public int V() {
-		return V;
-	}
-
-	public int E() {
-		return E;
-	}
+#!/bin/python
+# -*- coding: utf8 -*-
+import sys
+import os
+import re
 
 
-	public List<Integer> adj(int i) {
-		return adj[i];
-	}
+# 请完成下面这个函数，实现题目要求的功能
+# 当然，你也可以不按照下面这个模板来作答，完全按照自己的想法来 ^-^
+# ******************************开始写代码******************************
 
 
-	public List<Integer> adj1(int i) {
-		List<Integer> list = new ArrayList<>();
-		int[] adg1 = new int[V];
-		adg1 = a[i];
-		for (int v : adg1)
-			if (v != 0)
-				list.add(v);
-		return list;
-	}
-}
+def rrr(s, t):
+    r = dict()
+    for _t_index, _t in enumerate(t):
+        has_r = r.get(_t, "0")
+        if has_r == "0":
+            r[_t] = s[_t_index]
+        else:
+            if has_r != s[_t_index]:
+                return 0
+        pass
 
-public class Main {
-	static boolean[] marked;
-	static int count;
-	static int[] edgeTo;
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int n = Integer.valueOf(sc.nextLine());
-		Graph g = new Graph(n);
-		for(int i=0;i<n-1;i++){
-			String str[] = sc.nextLine().split(" ");
-			g.addEdge(Integer.valueOf(str[0])-1, Integer.valueOf(str[1])-1);
-		}
-		marked = new boolean[g.V()];
-		edgeTo = new int[g.V()];
-		dfs(g,0);
-		System.out.println(count);
-	}
-	
-	public static void dfs(Graph G, int s) {
-		marked[s] = true;
-		count++;
-		for (int temp : G.adj(s))
-			if (!marked[temp]) {
-				edgeTo[temp] = s;
-				dfs(G, temp);
-			}
-	}
-}
+    r = dict()
+    for _s_index, _s in enumerate(s):
+        has_r = r.get(_s, "0")
+        if has_r == "0":
+            r[_s] = t[_s_index]
+        else:
+            if has_r != t[_s_index]:
+                return 0
+        pass
+    return 1
+    pass
+
+
+def solve(S, T):
+
+    result_count = 0
+    for i in range(len(S) - len(T) + 1):
+        _S = S[i: i + len(T)]
+        count = rrr(_S, T)
+        result_count += count
+        pass
+
+    return result_count
+
+# ******************************结束写代码******************************
+
+
+try:
+    _S = input()
+    # _S = "ababcb"
+except:
+    _S = None
+
+try:
+    _T = input()
+    # _T = "ded"
+except:
+    _T = None
+
+res = solve(_S, _T)
+
+print(str(res) + "\n")
